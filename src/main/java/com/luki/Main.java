@@ -7,49 +7,20 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Main");
 
-        Main m = new Main();
-        m.start();
+        ClientWrapper clientWrapper = new ClientWrapper();
+        String url = "https://www.idx.co.id/umbraco/Surface/StockData/GetSecuritiesStock?board=PENGEMBANGAN&draw=3&start=0&length=2";
 
-        GetExample g = new GetExample();
-        String url = "https://www.idx.co.id/umbraco/Surface/StockData/GetSecuritiesStock?board=PENGEMBANGAN&draw=3&start=0&length=100";
-        try {
-            g.run(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        clientWrapper.get(url);
+        //clientWrapper.getWithProxy(url,"localhost",8888);
     }
 
-    public void start() {
-        String url = "https://www.idx.co.id/umbraco/Surface/StockData/GetSecuritiesStock?board=PENGEMBANGAN&draw=3&start=0&length=100";
-        try {
-            this.get(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public String get(String url) {
-        String result = "";
-        try {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }
